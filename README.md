@@ -30,3 +30,93 @@ Citations:
 [6] https://firebaseopensource.com/projects/firebase/quickstart-android/auth/readme/
 [7] https://firebase.google.com/docs/hosting/quickstart
 [8] https://stackoverflow.com/questions/53445417/cannot-resolve-symbol-quickstart
+
+
+----
+
+是的，可以使用 Python 来验证 Firebase 的 Quickstart。以下是一个简单的教程案例，展示了如何使用 Python 设置 Firebase 实时数据库并进行基本的 CRUD（创建、读取、更新、删除）操作。
+
+## 设置 Firebase 实时数据库
+
+首先，你需要在 Firebase 控制台中创建一个新项目，并启动一个实时数据库。选择测试模式以便于开发阶段读写数据。
+
+1. 访问 Firebase 控制台（`https://console.firebase.google.com/`），创建一个新项目。
+2. 在项目中，选择“数据库”部分，然后启动一个实时数据库。
+3. 选择测试模式，这样可以在开发阶段无限制地读写数据。
+
+## 安装 Firebase Admin SDK
+
+在你的 Python 环境中，你需要安装 Firebase Admin SDK。打开终端或命令提示符，运行以下命令：
+
+```bash
+pip install firebase-admin
+```
+
+## 初始化 Firebase Admin SDK
+
+要使用 Firebase Admin SDK，你需要一个服务账户密钥。在 Firebase 控制台的项目设置中生成一个新的私钥，并下载 JSON 文件。
+
+```python
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
+# 初始化 SDK
+cred = credentials.Certificate('path/to/serviceAccountKey.json')
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://your-database-url.firebaseio.com/'
+})
+```
+
+## 写入数据
+
+以下是如何使用 Python 将数据写入 Firebase 实时数据库的示例。
+
+```python
+ref = db.reference('/')
+ref.set({
+    'books': {
+        'python': {
+            'name': 'Learning Python',
+            'author': 'Mark Lutz'
+        }
+    }
+})
+```
+
+## 读取数据
+
+读取数据库中的数据非常简单。以下是如何读取我们刚才写入的数据。
+
+```python
+ref = db.reference('books/python')
+print(ref.get())
+```
+
+## 更新和删除数据
+
+更新和删除数据也很直接。以下是更新和删除数据的示例。
+
+```python
+# 更新数据
+ref = db.reference('books/python')
+ref.update({
+    'name': 'Programming Python'
+})
+
+# 删除数据
+ref = db.reference('books/python')
+ref.delete()
+```
+
+以上步骤展示了如何使用 Python 和 Firebase Admin SDK 来设置 Firebase 实时数据库并进行基本的 CRUD 操作。这只是 Firebase 功能的冰山一角。Firebase 还提供了认证、云函数、存储等多种服务，可以帮助你构建更加强大和完整的应用[1][2]。
+
+Citations:
+[1] https://github.com/firebase/quickstart-python
+[2] https://www.freecodecamp.org/news/how-to-get-started-with-firebase-using-python/
+[3] https://www.youtube.com/watch?v=esqNgnayVE8
+[4] https://firebase.google.com/docs/functions/get-started
+[5] https://firebase.google.com/docs/firestore/quickstart
+[6] https://cloud.google.com/appengine/docs/standard/python3/building-app/authenticating-users
+[7] https://www.youtube.com/watch?v=BnrkTpgH5Vc
+[8] https://www.youtube.com/watch?v=w0P2v25Fwj4
